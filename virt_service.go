@@ -77,9 +77,9 @@ type StopVirtInstanceOpts struct {
 // Fields are used based on DevType: DISK uses Source/Destination,
 // NIC uses Network/NICType/Parent, PROXY uses SourceProto/SourcePort/DestProto/DestPort.
 type VirtDeviceOpts struct {
-	DevType     string
-	Name        string
-	Readonly    bool
+	DevType  string
+	Name     string
+	Readonly bool
 	// DISK fields
 	Source      string
 	Destination string

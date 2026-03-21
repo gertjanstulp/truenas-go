@@ -14,13 +14,13 @@ var methodsFS embed.FS
 
 // MethodDef describes a single TrueNAS API method.
 type MethodDef struct {
-	Description *string `json:"description"`
-	Job         bool    `json:"job"`
-	Filterable  bool    `json:"filterable"`
-	Downloadable bool   `json:"downloadable"`
-	Uploadable  bool    `json:"uploadable"`
-	ItemMethod  bool    `json:"item_method"`
-	RequireWS   bool    `json:"require_websocket"`
+	Description  *string `json:"description"`
+	Job          bool    `json:"job"`
+	Filterable   bool    `json:"filterable"`
+	Downloadable bool    `json:"downloadable"`
+	Uploadable   bool    `json:"uploadable"`
+	ItemMethod   bool    `json:"item_method"`
+	RequireWS    bool    `json:"require_websocket"`
 }
 
 // Methods returns all API methods for a given TrueNAS version (e.g. "25.04").

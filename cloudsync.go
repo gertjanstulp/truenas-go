@@ -7,14 +7,14 @@ import (
 
 // CloudSyncCredentialResponse represents a cloud sync credential from the API.
 type CloudSyncCredentialResponse struct {
-	ID       int64                        `json:"id"`
-	Name     string                       `json:"name"`
-	Provider CloudSyncCredentialProvider  `json:"provider"`
+	ID       int64                       `json:"id"`
+	Name     string                      `json:"name"`
+	Provider CloudSyncCredentialProvider `json:"provider"`
 }
 
 // CloudSyncCredentialProvider contains the provider type and attributes.
 type CloudSyncCredentialProvider struct {
-	Type       string            `json:"type"`
+	Type string `json:"type"`
 	// S3 attributes
 	AccessKeyID     string `json:"access_key_id,omitempty"`
 	SecretAccessKey string `json:"secret_access_key,omitempty"`

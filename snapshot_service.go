@@ -8,11 +8,11 @@ import (
 
 // Snapshot method names (without prefix).
 const (
-	methodSnapshotCreate  = "create"
-	methodSnapshotQuery   = "query"
-	methodSnapshotDelete  = "delete"
-	methodSnapshotHold    = "hold"
-	methodSnapshotRelease = "release"
+	methodSnapshotCreate   = "create"
+	methodSnapshotQuery    = "query"
+	methodSnapshotDelete   = "delete"
+	methodSnapshotHold     = "hold"
+	methodSnapshotRelease  = "release"
 	methodSnapshotClone    = "clone"
 	methodSnapshotRollback = "rollback"
 )

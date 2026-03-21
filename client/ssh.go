@@ -403,10 +403,10 @@ type jobStatus struct {
 	Error     *string         `json:"error"`
 	Exception *string         `json:"exception"`
 	ExcInfo   *struct {
-		Type   string `json:"type"`
-		Errno  *int   `json:"errno"`
-		Repr   string `json:"repr"`
-		Extra  any    `json:"extra"`
+		Type  string `json:"type"`
+		Errno *int   `json:"errno"`
+		Repr  string `json:"repr"`
+		Extra any    `json:"extra"`
 	} `json:"exc_info"`
 }
 

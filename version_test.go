@@ -264,10 +264,10 @@ func TestVersion_IsZero(t *testing.T) {
 
 func TestVersion_Compare(t *testing.T) {
 	tests := []struct {
-		name  string
-		a     Version
-		b     Version
-		want  int
+		name string
+		a    Version
+		b    Version
+		want int
 	}{
 		{
 			name: "equal versions",
@@ -321,4 +321,3 @@ func TestVersion_Compare(t *testing.T) {
 		})
 	}
 }
-

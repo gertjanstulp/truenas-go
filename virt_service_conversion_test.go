@@ -74,13 +74,13 @@ func TestVirtInstanceFromResponse(t *testing.T) {
 	mem := int64(4294967296)
 	netmask := int64(24)
 	resp := VirtInstanceResponse{
-		ID:        "inst1",
-		Name:      "testvm",
-		Type:      "CONTAINER",
-		Status:    "STOPPED",
-		CPU:       &cpu,
-		Memory:    &mem,
-		Autostart: false,
+		ID:          "inst1",
+		Name:        "testvm",
+		Type:        "CONTAINER",
+		Status:      "STOPPED",
+		CPU:         &cpu,
+		Memory:      &mem,
+		Autostart:   false,
 		Environment: map[string]string{"A": "1"},
 		Aliases: []VirtInstanceAliasResponse{
 			{Type: "INET", Address: "192.168.1.10", Netmask: &netmask},

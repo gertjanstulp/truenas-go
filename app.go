@@ -47,12 +47,12 @@ type AppContainerDetailsResponse struct {
 
 // AppUpgradeSummaryResponse is the wire-format for app.upgrade_summary.
 type AppUpgradeSummaryResponse struct {
-	LatestVersion       string                          `json:"latest_version"`
-	LatestHumanVersion  string                          `json:"latest_human_version"`
-	UpgradeVersion      string                          `json:"upgrade_version"`
-	UpgradeHumanVersion string                          `json:"upgrade_human_version"`
-	Changelog           *string                         `json:"changelog"`
-	AvailableVersions   []AppAvailableVersionResponse   `json:"available_versions_for_upgrade"`
+	LatestVersion       string                        `json:"latest_version"`
+	LatestHumanVersion  string                        `json:"latest_human_version"`
+	UpgradeVersion      string                        `json:"upgrade_version"`
+	UpgradeHumanVersion string                        `json:"upgrade_human_version"`
+	Changelog           *string                       `json:"changelog"`
+	AvailableVersions   []AppAvailableVersionResponse `json:"available_versions_for_upgrade"`
 }
 
 // AppAvailableVersionResponse is the wire-format for an available upgrade version.
@@ -72,11 +72,11 @@ type AppImageResponse struct {
 
 // AppStatsResponse is the wire-format for app.stats events.
 type AppStatsResponse struct {
-	AppName  string                         `json:"app_name"`
-	Memory   int64                          `json:"memory"`
-	CPUUsage float64                        `json:"cpu_usage"`
-	Blkio    AppStatsBlkioResponse          `json:"blkio"`
-	Networks []AppStatsNetworkResponse      `json:"networks"`
+	AppName  string                    `json:"app_name"`
+	Memory   int64                     `json:"memory"`
+	CPUUsage float64                   `json:"cpu_usage"`
+	Blkio    AppStatsBlkioResponse     `json:"blkio"`
+	Networks []AppStatsNetworkResponse `json:"networks"`
 }
 
 // AppStatsBlkioResponse is the wire-format for block I/O stats.

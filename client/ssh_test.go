@@ -1235,9 +1235,9 @@ func TestSSHConfig_Validate_MaxSessions(t *testing.T) {
 		name        string
 		maxSessions int
 	}{
-		{"zero is preserved", 0},       // Validate does not modify; NewSSHClient applies default
-		{"negative is preserved", -5},  // Validate does not modify; NewSSHClient applies default
-		{"positive is preserved", 25},  // positive values preserved as-is
+		{"zero is preserved", 0},      // Validate does not modify; NewSSHClient applies default
+		{"negative is preserved", -5}, // Validate does not modify; NewSSHClient applies default
+		{"positive is preserved", 25}, // positive values preserved as-is
 	}
 
 	for _, tt := range tests {

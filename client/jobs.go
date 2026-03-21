@@ -169,4 +169,3 @@ func ParseJobID(data json.RawMessage) (int64, error) {
 
 	return jobID, nil
 }
-

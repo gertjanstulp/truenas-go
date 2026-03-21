@@ -102,12 +102,12 @@ type AppImage struct {
 
 // AppStats represents stats for an app.
 type AppStats struct {
-	AppName  string
-	Memory   int64
-	CPUUsage float64
+	AppName    string
+	Memory     int64
+	CPUUsage   float64
 	BlkioRead  int64
 	BlkioWrite int64
-	Networks []AppNetworkStats
+	Networks   []AppNetworkStats
 }
 
 // AppNetworkStats represents per-interface network stats for an app.

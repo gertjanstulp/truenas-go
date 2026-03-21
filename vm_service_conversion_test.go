@@ -157,10 +157,10 @@ func TestVMDeviceFromResponse_NIC(t *testing.T) {
 		VM:    1,
 		Order: 1004,
 		Attributes: map[string]any{
-			"dtype":                   "NIC",
-			"type":                    "VIRTIO",
+			"dtype":                  "NIC",
+			"type":                   "VIRTIO",
 			"nic_attach":             "br0",
-			"mac":                     "00:a0:98:6b:0c:01",
+			"mac":                    "00:a0:98:6b:0c:01",
 			"trust_guest_rx_filters": false,
 		},
 	}

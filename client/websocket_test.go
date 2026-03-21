@@ -1276,7 +1276,7 @@ func TestJobEventBuffer_Overflow(t *testing.T) {
 	}
 
 	// Newer events should still be there
-	if buf.getByJobID(jobEventBufferSize + 5) == nil {
+	if buf.getByJobID(jobEventBufferSize+5) == nil {
 		t.Error("expected to find recent job")
 	}
 }

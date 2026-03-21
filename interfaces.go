@@ -58,7 +58,7 @@ func IntPtr(i int) *int { return &i }
 // Close the subscription to stop receiving events and free resources.
 type Subscription[T any] struct {
 	C      <-chan T // Events channel — closed when subscription ends
-	cancel func()  // internal cleanup
+	cancel func()   // internal cleanup
 }
 
 // Close terminates the subscription and releases resources.

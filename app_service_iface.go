@@ -32,26 +32,26 @@ var _ AppServiceAPI = (*MockAppService)(nil)
 
 // MockAppService is a test double for AppServiceAPI.
 type MockAppService struct {
-	CreateAppFunc        func(ctx context.Context, opts CreateAppOpts) (*App, error)
-	GetAppFunc           func(ctx context.Context, name string) (*App, error)
-	GetAppWithConfigFunc func(ctx context.Context, name string) (*App, error)
-	UpdateAppFunc        func(ctx context.Context, name string, opts UpdateAppOpts) (*App, error)
-	ListAppsFunc         func(ctx context.Context) ([]App, error)
-	StartAppFunc         func(ctx context.Context, name string) error
-	StopAppFunc          func(ctx context.Context, name string) error
-	DeleteAppFunc        func(ctx context.Context, name string) error
-	UpgradeSummaryFunc   func(ctx context.Context, name string) (*AppUpgradeSummary, error)
-	ListImagesFunc       func(ctx context.Context) ([]AppImage, error)
-	AvailableSpaceFunc   func(ctx context.Context) (int64, error)
-	UpgradeAppFunc       func(ctx context.Context, name string) error
-	RedeployAppFunc      func(ctx context.Context, name string) error
-	CreateRegistryFunc   func(ctx context.Context, opts CreateRegistryOpts) (*Registry, error)
-	GetRegistryFunc      func(ctx context.Context, id int64) (*Registry, error)
-	ListRegistriesFunc   func(ctx context.Context) ([]Registry, error)
-	UpdateRegistryFunc   func(ctx context.Context, id int64, opts UpdateRegistryOpts) (*Registry, error)
-	DeleteRegistryFunc             func(ctx context.Context, id int64) error
-	SubscribeStatsFunc             func(ctx context.Context) (*Subscription[[]AppStats], error)
-	SubscribeContainerLogsFunc     func(ctx context.Context, opts ContainerLogOpts) (*Subscription[AppContainerLogEntry], error)
+	CreateAppFunc              func(ctx context.Context, opts CreateAppOpts) (*App, error)
+	GetAppFunc                 func(ctx context.Context, name string) (*App, error)
+	GetAppWithConfigFunc       func(ctx context.Context, name string) (*App, error)
+	UpdateAppFunc              func(ctx context.Context, name string, opts UpdateAppOpts) (*App, error)
+	ListAppsFunc               func(ctx context.Context) ([]App, error)
+	StartAppFunc               func(ctx context.Context, name string) error
+	StopAppFunc                func(ctx context.Context, name string) error
+	DeleteAppFunc              func(ctx context.Context, name string) error
+	UpgradeSummaryFunc         func(ctx context.Context, name string) (*AppUpgradeSummary, error)
+	ListImagesFunc             func(ctx context.Context) ([]AppImage, error)
+	AvailableSpaceFunc         func(ctx context.Context) (int64, error)
+	UpgradeAppFunc             func(ctx context.Context, name string) error
+	RedeployAppFunc            func(ctx context.Context, name string) error
+	CreateRegistryFunc         func(ctx context.Context, opts CreateRegistryOpts) (*Registry, error)
+	GetRegistryFunc            func(ctx context.Context, id int64) (*Registry, error)
+	ListRegistriesFunc         func(ctx context.Context) ([]Registry, error)
+	UpdateRegistryFunc         func(ctx context.Context, id int64, opts UpdateRegistryOpts) (*Registry, error)
+	DeleteRegistryFunc         func(ctx context.Context, id int64) error
+	SubscribeStatsFunc         func(ctx context.Context) (*Subscription[[]AppStats], error)
+	SubscribeContainerLogsFunc func(ctx context.Context, opts ContainerLogOpts) (*Subscription[AppContainerLogEntry], error)
 }
 
 func (m *MockAppService) CreateApp(ctx context.Context, opts CreateAppOpts) (*App, error) {

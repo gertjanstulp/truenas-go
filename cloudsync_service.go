@@ -287,17 +287,17 @@ func credentialOptsToAttrsAny(attrs map[string]string) map[string]any {
 // taskOptsToParams converts CreateCloudSyncTaskOpts to API parameters.
 func taskOptsToParams(opts CreateCloudSyncTaskOpts) map[string]any {
 	params := map[string]any{
-		"description":          opts.Description,
-		"path":                 opts.Path,
-		"credentials":         opts.CredentialID,
-		"direction":           opts.Direction,
-		"transfer_mode":       opts.TransferMode,
-		"snapshot":            opts.Snapshot,
-		"transfers":           opts.Transfers,
-		"follow_symlinks":     opts.FollowSymlinks,
+		"description":           opts.Description,
+		"path":                  opts.Path,
+		"credentials":           opts.CredentialID,
+		"direction":             opts.Direction,
+		"transfer_mode":         opts.TransferMode,
+		"snapshot":              opts.Snapshot,
+		"transfers":             opts.Transfers,
+		"follow_symlinks":       opts.FollowSymlinks,
 		"create_empty_src_dirs": opts.CreateEmptySrcDirs,
-		"enabled":             opts.Enabled,
-		"encryption":          opts.Encryption,
+		"enabled":               opts.Enabled,
+		"encryption":            opts.Encryption,
 		"schedule": map[string]any{
 			"minute": opts.Schedule.Minute,
 			"hour":   opts.Schedule.Hour,

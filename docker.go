@@ -22,7 +22,7 @@ type DockerConfigResponse struct {
 	Pool               string                      `json:"pool"`
 	EnableImageUpdates bool                        `json:"enable_image_updates"`
 	NvidiaEnabled      bool                        `json:"nvidia"`
-	AddressPoolsV4    []DockerAddressPoolResponse `json:"address_pools"`
+	AddressPoolsV4     []DockerAddressPoolResponse `json:"address_pools"`
 }
 
 // DockerAddressPoolResponse represents an address pool in Docker config.

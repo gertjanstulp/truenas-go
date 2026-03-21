@@ -65,11 +65,11 @@ type RealtimeMemoryResponse struct {
 
 // RealtimeDiskAggregateResponse is the wire-format for aggregate disk I/O metrics.
 type RealtimeDiskAggregateResponse struct {
-	ReadOps      float64 `json:"read_ops"`
-	ReadBytes    float64 `json:"read_bytes"`
-	WriteOps     float64 `json:"write_ops"`
-	WriteBytes   float64 `json:"write_bytes"`
-	BusyPercent  float64 `json:"busy"`
+	ReadOps     float64 `json:"read_ops"`
+	ReadBytes   float64 `json:"read_bytes"`
+	WriteOps    float64 `json:"write_ops"`
+	WriteBytes  float64 `json:"write_bytes"`
+	BusyPercent float64 `json:"busy"`
 }
 
 // RealtimeInterfaceResponse is the wire-format for per-interface network metrics.

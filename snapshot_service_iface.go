@@ -21,12 +21,12 @@ var _ SnapshotServiceAPI = (*MockSnapshotService)(nil)
 
 // MockSnapshotService is a test double for SnapshotServiceAPI.
 type MockSnapshotService struct {
-	CreateFunc  func(ctx context.Context, opts CreateSnapshotOpts) (*Snapshot, error)
-	GetFunc     func(ctx context.Context, id string) (*Snapshot, error)
-	ListFunc    func(ctx context.Context) ([]Snapshot, error)
-	DeleteFunc  func(ctx context.Context, id string) error
-	HoldFunc    func(ctx context.Context, id string) error
-	ReleaseFunc func(ctx context.Context, id string) error
+	CreateFunc   func(ctx context.Context, opts CreateSnapshotOpts) (*Snapshot, error)
+	GetFunc      func(ctx context.Context, id string) (*Snapshot, error)
+	ListFunc     func(ctx context.Context) ([]Snapshot, error)
+	DeleteFunc   func(ctx context.Context, id string) error
+	HoldFunc     func(ctx context.Context, id string) error
+	ReleaseFunc  func(ctx context.Context, id string) error
 	QueryFunc    func(ctx context.Context, filters [][]any) ([]Snapshot, error)
 	RollbackFunc func(ctx context.Context, id string) error
 	CloneFunc    func(ctx context.Context, snapshot, datasetDst string) error

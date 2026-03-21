@@ -71,24 +71,24 @@ type StopVMOpts struct {
 
 // DiskDevice contains attributes for a DISK device.
 type DiskDevice struct {
-	Path         string
-	Type         string
-	IOType       string
-	Serial       string
-	PhysicalSectorSize *int64
+	Path                string
+	Type                string
+	IOType              string
+	Serial              string
+	PhysicalSectorSize  *int64
 	Logical_Sector_Size *int64
 }
 
 // RawDevice contains attributes for a RAW device.
 type RawDevice struct {
-	Path         string
-	Type         string
-	Boot         bool
-	IOType       string
-	Serial       string
-	Exists       bool
-	Size         *int64
-	PhysicalSectorSize *int64
+	Path                string
+	Type                string
+	Boot                bool
+	IOType              string
+	Serial              string
+	Exists              bool
+	Size                *int64
+	PhysicalSectorSize  *int64
 	Logical_Sector_Size *int64
 }
 
@@ -99,9 +99,9 @@ type CDROMDevice struct {
 
 // NICDevice contains attributes for a NIC device.
 type NICDevice struct {
-	Type    string
-	NICAttach string
-	MAC     string
+	Type                string
+	NICAttach           string
+	MAC                 string
 	TrustGuestRxFilters bool
 }
 

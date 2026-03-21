@@ -35,10 +35,10 @@ type CreateDatasetOpts struct {
 // Pointer fields distinguish "don't change" (nil) from "set to zero/empty".
 // String fields use empty string to mean "don't change".
 type UpdateDatasetOpts struct {
-	Compression string  // Empty = don't change
+	Compression string // Empty = don't change
 	Quota       *int64
 	RefQuota    *int64
-	Atime       string  // Empty = don't change
+	Atime       string // Empty = don't change
 	Comments    *string
 }
 
