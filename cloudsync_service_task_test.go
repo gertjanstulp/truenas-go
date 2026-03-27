@@ -77,6 +77,8 @@ func TestCloudSyncService_CreateTask(t *testing.T) {
 		},
 		Attributes: map[string]any{"bucket": "my-bucket", "folder": "/backups"},
 		Exclude:    []string{"*.tmp"},
+		PreScript:  "prescript",
+		PostScript: "postscript",
 	})
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
@@ -116,6 +118,12 @@ func TestCloudSyncService_CreateTask(t *testing.T) {
 	}
 	if !task.CreateEmptySrcDirs {
 		t.Error("expected create_empty_src_dirs=true")
+	}
+	if task.PreScript != "prescript" {
+		t.Errorf("expected pre_script 'prescript', got %s", task.PreScript)
+	}
+	if task.PostScript != "postscript" {
+		t.Errorf("expected post_script 'postscript', got %s", task.PostScript)
 	}
 }
 

@@ -53,7 +53,9 @@ func sampleTaskJSON() json.RawMessage {
 		"include": [],
 		"follow_symlinks": false,
 		"create_empty_src_dirs": true,
-		"enabled": true
+		"enabled": true,
+		"pre_script": "prescript",
+		"post_script": "postscript"
 	}]`)
 }
 
