@@ -3,10 +3,10 @@ name: Coverage
 on:
   push:
     branches:
-      - main
+      - main-alt
   pull_request:
     branches:
-      - main
+      - main-alt
 
 permissions:
   contents: write
