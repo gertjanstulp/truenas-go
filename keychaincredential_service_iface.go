@@ -31,7 +31,7 @@ type MockSSHService struct {
 
 	CreateSSHConnectionFunc func(ctx context.Context, opts CreateSSHConnectionOpts) (*SSHConnection, error)
 	GetSSHConnectionFunc    func(ctx context.Context, id int64) (*SSHConnection, error)
-	ListSSHConnectionFunc   func(ctx context.Context) ([]SSHConnection, error)
+	ListSSHConnectionsFunc  func(ctx context.Context) ([]SSHConnection, error)
 	UpdateSSHConnectionFunc func(ctx context.Context, id int64, opts UpdateSSHConnectionOpts) (*SSHConnection, error)
 	DeleteSSHConnectionFunc func(ctx context.Context, id int64) error
 }
@@ -86,8 +86,8 @@ func (m *MockSSHService) GetSSHConnection(ctx context.Context, id int64) (*SSHCo
 }
 
 func (m *MockSSHService) ListSSHConnections(ctx context.Context) ([]SSHConnection, error) {
-	if m.ListSSHConnectionFunc != nil {
-		return m.ListSSHConnectionFunc(ctx)
+	if m.ListSSHConnectionsFunc != nil {
+		return m.ListSSHConnectionsFunc(ctx)
 	}
 	return nil, nil
 }
