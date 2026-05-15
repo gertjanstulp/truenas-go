@@ -5,13 +5,13 @@ import (
 	"testing"
 )
 
-func TestMockKeychainCredentialService_ImplementsInterface(t *testing.T) {
-	var _ KeychainCredentialServiceAPI = (*KeychainCredentialService)(nil)
-	var _ KeychainCredentialServiceAPI = (*MockKeychainCredentialService)(nil)
+func TestMockSSHService_ImplementsInterface(t *testing.T) {
+	var _ SSHServiceAPI = (*SSHService)(nil)
+	var _ SSHServiceAPI = (*MockSSHService)(nil)
 }
 
-func TestMockKeychainCredentialService_DefaultsToNil(t *testing.T) {
-	mock := &MockKeychainCredentialService{}
+func TestMockSSHService_DefaultsToNil(t *testing.T) {
+	mock := &MockSSHService{}
 	ctx := context.Background()
 
 	cred, err := mock.GetSSHKeyPair(ctx, 1)
@@ -23,9 +23,9 @@ func TestMockKeychainCredentialService_DefaultsToNil(t *testing.T) {
 	}
 }
 
-func TestMockKeychainCredentialService_CallsFunc(t *testing.T) {
+func TestMockSSHService_CallsFunc(t *testing.T) {
 	called := false
-	mock := &MockKeychainCredentialService{
+	mock := &MockSSHService{
 		GetSSHKeyPairFunc: func(ctx context.Context, id int64) (*SSHKeyPair, error) {
 			called = true
 			return &SSHKeyPair{ID: id}, nil

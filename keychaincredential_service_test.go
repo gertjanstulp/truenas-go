@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-func TestKeychainCredentialService_CreateSSHKeyPair(t *testing.T) {
+func TestSSHService_CreateSSHKeyPair(t *testing.T) {
 	callCount := 0
 	testData := sampleSSHKeyPair()
 	mock := &mockAsyncCaller{
@@ -44,7 +44,7 @@ func TestKeychainCredentialService_CreateSSHKeyPair(t *testing.T) {
 		},
 	}
 
-	svc := NewKeychainCredentialService(mock, Version{Major: 25, Minor: 4})
+	svc := NewSSHService(mock, Version{Major: 25, Minor: 4})
 	sshKeyPair, err := svc.CreateSSHKeyPair(context.Background(), CreateSSHKeyPairOpts{
 		Name:       testData.Name,
 		PublicKey:  testData.PublicKey,
@@ -70,7 +70,7 @@ func TestKeychainCredentialService_CreateSSHKeyPair(t *testing.T) {
 	}
 }
 
-func TestKeychainCredentialService_CreateSSHKeyPair_Error(t *testing.T) {
+func TestSSHService_CreateSSHKeyPair_Error(t *testing.T) {
 	mock := &mockAsyncCaller{
 		mockCaller: mockCaller{
 			callFunc: func(ctx context.Context, method string, params any) (json.RawMessage, error) {
@@ -79,7 +79,7 @@ func TestKeychainCredentialService_CreateSSHKeyPair_Error(t *testing.T) {
 		},
 	}
 
-	svc := NewKeychainCredentialService(mock, Version{Major: 25, Minor: 4})
+	svc := NewSSHService(mock, Version{Major: 25, Minor: 4})
 	sshKeyPair, err := svc.CreateSSHKeyPair(context.Background(), CreateSSHKeyPairOpts{})
 	if err == nil {
 		t.Fatal("expected error")
@@ -89,7 +89,7 @@ func TestKeychainCredentialService_CreateSSHKeyPair_Error(t *testing.T) {
 	}
 }
 
-func TestKeychainCredentialService_CreateSSHKeyPair_ParseError(t *testing.T) {
+func TestSSHService_CreateSSHKeyPair_ParseError(t *testing.T) {
 	mock := &mockAsyncCaller{
 		mockCaller: mockCaller{
 			callFunc: func(ctx context.Context, method string, params any) (json.RawMessage, error) {
@@ -98,14 +98,14 @@ func TestKeychainCredentialService_CreateSSHKeyPair_ParseError(t *testing.T) {
 		},
 	}
 
-	svc := NewKeychainCredentialService(mock, Version{Major: 25, Minor: 4})
+	svc := NewSSHService(mock, Version{Major: 25, Minor: 4})
 	_, err := svc.CreateSSHKeyPair(context.Background(), CreateSSHKeyPairOpts{})
 	if err == nil {
 		t.Fatal("expected parse error")
 	}
 }
 
-func TestKeychainCredentialService_GetSSHKeyPair(t *testing.T) {
+func TestSSHService_GetSSHKeyPair(t *testing.T) {
 	testData := sampleSSHKeyPair()
 	mock := &mockAsyncCaller{
 		mockCaller: mockCaller{
@@ -118,7 +118,7 @@ func TestKeychainCredentialService_GetSSHKeyPair(t *testing.T) {
 		},
 	}
 
-	svc := NewKeychainCredentialService(mock, Version{Major: 25, Minor: 4})
+	svc := NewSSHService(mock, Version{Major: 25, Minor: 4})
 	sshKeyPair, err := svc.GetSSHKeyPair(context.Background(), 1)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
@@ -140,7 +140,7 @@ func TestKeychainCredentialService_GetSSHKeyPair(t *testing.T) {
 	}
 }
 
-func TestKeychainCredentialService_GetSSHKeyPair_NotFound(t *testing.T) {
+func TestSSHService_GetSSHKeyPair_NotFound(t *testing.T) {
 	mock := &mockAsyncCaller{
 		mockCaller: mockCaller{
 			callFunc: func(ctx context.Context, method string, params any) (json.RawMessage, error) {
@@ -149,7 +149,7 @@ func TestKeychainCredentialService_GetSSHKeyPair_NotFound(t *testing.T) {
 		},
 	}
 
-	svc := NewKeychainCredentialService(mock, Version{Major: 25, Minor: 4})
+	svc := NewSSHService(mock, Version{Major: 25, Minor: 4})
 	sshKeyPair, err := svc.GetSSHKeyPair(context.Background(), 999)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
@@ -159,7 +159,7 @@ func TestKeychainCredentialService_GetSSHKeyPair_NotFound(t *testing.T) {
 	}
 }
 
-func TestKeychainCredentialService_GetSSHKeyPair_Error(t *testing.T) {
+func TestSSHService_GetSSHKeyPair_Error(t *testing.T) {
 	mock := &mockAsyncCaller{
 		mockCaller: mockCaller{
 			callFunc: func(ctx context.Context, method string, params any) (json.RawMessage, error) {
@@ -168,14 +168,14 @@ func TestKeychainCredentialService_GetSSHKeyPair_Error(t *testing.T) {
 		},
 	}
 
-	svc := NewKeychainCredentialService(mock, Version{Major: 25, Minor: 4})
+	svc := NewSSHService(mock, Version{Major: 25, Minor: 4})
 	_, err := svc.GetSSHKeyPair(context.Background(), 1)
 	if err == nil {
 		t.Fatal("expected error")
 	}
 }
 
-func TestKeychainCredentialService_GetSSHKeyPair_ParseError(t *testing.T) {
+func TestSSHService_GetSSHKeyPair_ParseError(t *testing.T) {
 	mock := &mockAsyncCaller{
 		mockCaller: mockCaller{
 			callFunc: func(ctx context.Context, method string, params any) (json.RawMessage, error) {
@@ -184,14 +184,14 @@ func TestKeychainCredentialService_GetSSHKeyPair_ParseError(t *testing.T) {
 		},
 	}
 
-	svc := NewKeychainCredentialService(mock, Version{Major: 25, Minor: 4})
+	svc := NewSSHService(mock, Version{Major: 25, Minor: 4})
 	_, err := svc.GetSSHKeyPair(context.Background(), 1)
 	if err == nil {
 		t.Fatal("expected parse error")
 	}
 }
 
-func TestKeychainCredentialService_ListSSHKeyPairs(t *testing.T) {
+func TestSSHService_ListSSHKeyPairs(t *testing.T) {
 	testData := sampleSSHKeyPairs()
 	mock := &mockAsyncCaller{
 		mockCaller: mockCaller{
@@ -207,7 +207,7 @@ func TestKeychainCredentialService_ListSSHKeyPairs(t *testing.T) {
 		},
 	}
 
-	svc := NewKeychainCredentialService(mock, Version{Major: 25, Minor: 4})
+	svc := NewSSHService(mock, Version{Major: 25, Minor: 4})
 	sshKeyPairs, err := svc.ListSSHKeyPairs(context.Background())
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
@@ -243,7 +243,7 @@ func TestKeychainCredentialService_ListSSHKeyPairs(t *testing.T) {
 	}
 }
 
-func TestKeychainCredentialService_ListSSHKeyPairs_Empty(t *testing.T) {
+func TestSSHService_ListSSHKeyPairs_Empty(t *testing.T) {
 	mock := &mockAsyncCaller{
 		mockCaller: mockCaller{
 			callFunc: func(ctx context.Context, method string, params any) (json.RawMessage, error) {
@@ -252,7 +252,7 @@ func TestKeychainCredentialService_ListSSHKeyPairs_Empty(t *testing.T) {
 		},
 	}
 
-	svc := NewKeychainCredentialService(mock, Version{Major: 25, Minor: 4})
+	svc := NewSSHService(mock, Version{Major: 25, Minor: 4})
 	sshKeyPairs, err := svc.ListSSHKeyPairs(context.Background())
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
@@ -262,7 +262,7 @@ func TestKeychainCredentialService_ListSSHKeyPairs_Empty(t *testing.T) {
 	}
 }
 
-func TestKeychainCredentialService_ListSSHKeyPairs_Error(t *testing.T) {
+func TestSSHService_ListSSHKeyPairs_Error(t *testing.T) {
 	mock := &mockAsyncCaller{
 		mockCaller: mockCaller{
 			callFunc: func(ctx context.Context, method string, params any) (json.RawMessage, error) {
@@ -271,14 +271,14 @@ func TestKeychainCredentialService_ListSSHKeyPairs_Error(t *testing.T) {
 		},
 	}
 
-	svc := NewKeychainCredentialService(mock, Version{Major: 25, Minor: 4})
+	svc := NewSSHService(mock, Version{Major: 25, Minor: 4})
 	_, err := svc.ListSSHKeyPairs(context.Background())
 	if err == nil {
 		t.Fatal("expected error")
 	}
 }
 
-func TestKeychainCredentialService_ListSSHKeyPairs_ParseError(t *testing.T) {
+func TestSSHService_ListSSHKeyPairs_ParseError(t *testing.T) {
 	mock := &mockAsyncCaller{
 		mockCaller: mockCaller{
 			callFunc: func(ctx context.Context, method string, params any) (json.RawMessage, error) {
@@ -287,14 +287,14 @@ func TestKeychainCredentialService_ListSSHKeyPairs_ParseError(t *testing.T) {
 		},
 	}
 
-	svc := NewKeychainCredentialService(mock, Version{Major: 25, Minor: 4})
+	svc := NewSSHService(mock, Version{Major: 25, Minor: 4})
 	_, err := svc.ListSSHKeyPairs(context.Background())
 	if err == nil {
 		t.Fatal("expected parse error")
 	}
 }
 
-func TestKeychainCredentialService_UpdateSSHKeyPair(t *testing.T) {
+func TestSSHService_UpdateSSHKeyPair(t *testing.T) {
 	callCount := 0
 	mock := &mockAsyncCaller{
 		mockCaller: mockCaller{
@@ -326,7 +326,7 @@ func TestKeychainCredentialService_UpdateSSHKeyPair(t *testing.T) {
 		},
 	}
 
-	svc := NewKeychainCredentialService(mock, Version{Major: 25, Minor: 4})
+	svc := NewSSHService(mock, Version{Major: 25, Minor: 4})
 	sshKeyPair, err := svc.UpdateSSHKeyPair(context.Background(), 1, UpdateSSHKeyPairOpts{
 		Name: "Updated keypair",
 	})
@@ -341,7 +341,7 @@ func TestKeychainCredentialService_UpdateSSHKeyPair(t *testing.T) {
 	}
 }
 
-func TestKeychainCredentialService_UpdateSSHKeyPair_Error(t *testing.T) {
+func TestSSHService_UpdateSSHKeyPair_Error(t *testing.T) {
 	mock := &mockAsyncCaller{
 		mockCaller: mockCaller{
 			callFunc: func(ctx context.Context, method string, params any) (json.RawMessage, error) {
@@ -350,14 +350,14 @@ func TestKeychainCredentialService_UpdateSSHKeyPair_Error(t *testing.T) {
 		},
 	}
 
-	svc := NewKeychainCredentialService(mock, Version{Major: 25, Minor: 4})
+	svc := NewSSHService(mock, Version{Major: 25, Minor: 4})
 	_, err := svc.UpdateSSHKeyPair(context.Background(), 999, UpdateSSHKeyPairOpts{})
 	if err == nil {
 		t.Fatal("expected error")
 	}
 }
 
-func TestKeychainCredentialService_DeleteSSHKeyPair(t *testing.T) {
+func TestSSHService_DeleteSSHKeyPair(t *testing.T) {
 	mock := &mockAsyncCaller{
 		mockCaller: mockCaller{
 			callFunc: func(ctx context.Context, method string, params any) (json.RawMessage, error) {
@@ -373,14 +373,14 @@ func TestKeychainCredentialService_DeleteSSHKeyPair(t *testing.T) {
 		},
 	}
 
-	svc := NewKeychainCredentialService(mock, Version{Major: 25, Minor: 4})
+	svc := NewSSHService(mock, Version{Major: 25, Minor: 4})
 	err := svc.DeleteSSHKeyPair(context.Background(), 5)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
 }
 
-func TestKeychainCredentialService_DeleteSSHKeyPair_Error(t *testing.T) {
+func TestSSHService_DeleteSSHKeyPair_Error(t *testing.T) {
 	mock := &mockAsyncCaller{
 		mockCaller: mockCaller{
 			callFunc: func(ctx context.Context, method string, params any) (json.RawMessage, error) {
@@ -389,16 +389,16 @@ func TestKeychainCredentialService_DeleteSSHKeyPair_Error(t *testing.T) {
 		},
 	}
 
-	svc := NewKeychainCredentialService(mock, Version{Major: 25, Minor: 4})
+	svc := NewSSHService(mock, Version{Major: 25, Minor: 4})
 	err := svc.DeleteSSHKeyPair(context.Background(), 1)
 	if err == nil {
 		t.Fatal("expected error")
 	}
 }
 
-func TestKeychainCredentialService_CreateSSHCredential(t *testing.T) {
+func TestSSHService_CreateSSHConnection(t *testing.T) {
 	callCount := 0
-	testData := sampleSSHCredential()
+	testData := sampleSSHConnection()
 	mock := &mockAsyncCaller{
 		mockCaller: mockCaller{
 			callFunc: func(ctx context.Context, method string, params any) (json.RawMessage, error) {
@@ -411,8 +411,8 @@ func TestKeychainCredentialService_CreateSSHCredential(t *testing.T) {
 					if p["name"] != testData.Name {
 						t.Errorf("expected name '%s', got '%s'", testData.Name, p["name"])
 					}
-					if p["type"] != KeychainCredentialTypeSSHCredential {
-						t.Errorf("expected type '%s', got '%s'", KeychainCredentialTypeSSHCredential, p["type"])
+					if p["type"] != KeychainCredentialTypeSSHConnection {
+						t.Errorf("expected type '%s', got '%s'", KeychainCredentialTypeSSHConnection, p["type"])
 					}
 
 					if _, ok := p["attributes"]; !ok {
@@ -428,67 +428,67 @@ func TestKeychainCredentialService_CreateSSHCredential(t *testing.T) {
 						if attrs["username"] != testData.Username {
 							t.Errorf("expected username '%s', got '%s'", testData.Username, p["username"])
 						}
+						if attrs["private_key"] != testData.PrivateKeyID {
+							t.Errorf("expected private_key '%d', got '%d'", testData.PrivateKeyID, p["private_key"])
+						}
 						if attrs["remote_host_key"] != testData.RemoteHostKey {
 							t.Errorf("expected remote_host_key '%s', got '%s'", testData.RemoteHostKey, p["remote_host_key"])
 						}
 						if attrs["connect_timeout"] != testData.ConnectTimeout {
 							t.Errorf("expected connect_timeout '%d', got '%d'", testData.ConnectTimeout, p["connect_timeout"])
 						}
-						if attrs["private_key"] != testData.SSHKeyPairID {
-							t.Errorf("expected private_key '%d', got '%d'", testData.SSHKeyPairID, p["private_key"])
-						}
 					}
 
 					return json.RawMessage(`{"id": 1}`), nil
 				}
-				return sampleSSHCredentialJSON(), nil
+				return sampleSSHConnectionJSON(), nil
 			},
 		},
 	}
 
-	svc := NewKeychainCredentialService(mock, Version{Major: 25, Minor: 4})
-	sshCredential, err := svc.CreateSSHCredential(context.Background(), CreateSSHCredentialOpts{
+	svc := NewSSHService(mock, Version{Major: 25, Minor: 4})
+	sshConnection, err := svc.CreateSSHConnection(context.Background(), CreateSSHConnectionOpts{
 		Name:           testData.Name,
 		Host:           testData.Host,
 		Port:           testData.Port,
 		Username:       testData.Username,
+		PrivateKeyID:   testData.PrivateKeyID,
 		RemoteHostKey:  testData.RemoteHostKey,
 		ConnectTimeout: testData.ConnectTimeout,
-		SSHKeyPairID:   testData.SSHKeyPairID,
 	})
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
-	if sshCredential == nil {
-		t.Fatal("expected non-nil sshcredential")
+	if sshConnection == nil {
+		t.Fatal("expected non-nil sshconnection")
 	}
-	if sshCredential.ID != 1 {
-		t.Errorf("expected ID %d, got %d", testData.ID, sshCredential.ID)
+	if sshConnection.ID != 1 {
+		t.Errorf("expected ID %d, got %d", testData.ID, sshConnection.ID)
 	}
-	if sshCredential.Name != testData.Name {
-		t.Errorf("expected name '%s', got '%s'", testData.Name, sshCredential.Name)
+	if sshConnection.Name != testData.Name {
+		t.Errorf("expected name '%s', got '%s'", testData.Name, sshConnection.Name)
 	}
-	if sshCredential.Host != testData.Host {
-		t.Errorf("expected host '%s', got %s", testData.Host, sshCredential.Host)
+	if sshConnection.Host != testData.Host {
+		t.Errorf("expected host '%s', got %s", testData.Host, sshConnection.Host)
 	}
-	if sshCredential.Port != testData.Port {
-		t.Errorf("expected port '%d', got %d", testData.Port, sshCredential.Port)
+	if sshConnection.Port != testData.Port {
+		t.Errorf("expected port '%d', got %d", testData.Port, sshConnection.Port)
 	}
-	if sshCredential.Username != testData.Username {
-		t.Errorf("expected username '%s', got %s", testData.Username, sshCredential.Username)
+	if sshConnection.Username != testData.Username {
+		t.Errorf("expected username '%s', got %s", testData.Username, sshConnection.Username)
 	}
-	if sshCredential.RemoteHostKey != testData.RemoteHostKey {
-		t.Errorf("expected remote_host_key '%s', got %s", testData.RemoteHostKey, sshCredential.RemoteHostKey)
+	if sshConnection.PrivateKeyID != testData.PrivateKeyID {
+		t.Errorf("expected private_key '%d', got %d", testData.PrivateKeyID, sshConnection.PrivateKeyID)
 	}
-	if sshCredential.ConnectTimeout != testData.ConnectTimeout {
-		t.Errorf("expected connect_timeout '%d', got %d", testData.ConnectTimeout, sshCredential.ConnectTimeout)
+	if sshConnection.RemoteHostKey != testData.RemoteHostKey {
+		t.Errorf("expected remote_host_key '%s', got %s", testData.RemoteHostKey, sshConnection.RemoteHostKey)
 	}
-	if sshCredential.SSHKeyPairID != testData.SSHKeyPairID {
-		t.Errorf("expected private_key '%d', got %d", testData.SSHKeyPairID, sshCredential.SSHKeyPairID)
+	if sshConnection.ConnectTimeout != testData.ConnectTimeout {
+		t.Errorf("expected connect_timeout '%d', got %d", testData.ConnectTimeout, sshConnection.ConnectTimeout)
 	}
 }
 
-func TestKeychainCredentialService_CreateSSHCredential_Error(t *testing.T) {
+func TestSSHService_CreateSSHConnection_Error(t *testing.T) {
 	mock := &mockAsyncCaller{
 		mockCaller: mockCaller{
 			callFunc: func(ctx context.Context, method string, params any) (json.RawMessage, error) {
@@ -497,17 +497,17 @@ func TestKeychainCredentialService_CreateSSHCredential_Error(t *testing.T) {
 		},
 	}
 
-	svc := NewKeychainCredentialService(mock, Version{Major: 25, Minor: 4})
-	sshCredential, err := svc.CreateSSHCredential(context.Background(), CreateSSHCredentialOpts{})
+	svc := NewSSHService(mock, Version{Major: 25, Minor: 4})
+	sshConnection, err := svc.CreateSSHConnection(context.Background(), CreateSSHConnectionOpts{})
 	if err == nil {
 		t.Fatal("expected error")
 	}
-	if sshCredential != nil {
+	if sshConnection != nil {
 		t.Error("expected nil sshkeypair on error")
 	}
 }
 
-func TestKeychainCredentialService_CreateSSHCredential_ParseError(t *testing.T) {
+func TestSSHService_CreateSSHConnection_ParseError(t *testing.T) {
 	mock := &mockAsyncCaller{
 		mockCaller: mockCaller{
 			callFunc: func(ctx context.Context, method string, params any) (json.RawMessage, error) {
@@ -516,61 +516,61 @@ func TestKeychainCredentialService_CreateSSHCredential_ParseError(t *testing.T) 
 		},
 	}
 
-	svc := NewKeychainCredentialService(mock, Version{Major: 25, Minor: 4})
-	_, err := svc.CreateSSHCredential(context.Background(), CreateSSHCredentialOpts{})
+	svc := NewSSHService(mock, Version{Major: 25, Minor: 4})
+	_, err := svc.CreateSSHConnection(context.Background(), CreateSSHConnectionOpts{})
 	if err == nil {
 		t.Fatal("expected parse error")
 	}
 }
 
-func TestKeychainCredentialService_GetSSHCredential(t *testing.T) {
-	testData := sampleSSHCredential()
+func TestSSHService_GetSSHConnection(t *testing.T) {
+	testData := sampleSSHConnection()
 	mock := &mockAsyncCaller{
 		mockCaller: mockCaller{
 			callFunc: func(ctx context.Context, method string, params any) (json.RawMessage, error) {
 				if method != "keychaincredential.query" {
 					t.Errorf("expected method keychaincredential.query, got %s", method)
 				}
-				return sampleSSHCredentialJSON(), nil
+				return sampleSSHConnectionJSON(), nil
 			},
 		},
 	}
 
-	svc := NewKeychainCredentialService(mock, Version{Major: 25, Minor: 4})
-	sshCredential, err := svc.GetSSHCredential(context.Background(), 1)
+	svc := NewSSHService(mock, Version{Major: 25, Minor: 4})
+	sshConnection, err := svc.GetSSHConnection(context.Background(), 1)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
-	if sshCredential == nil {
-		t.Fatal("expected non-nil sshCredential")
+	if sshConnection == nil {
+		t.Fatal("expected non-nil sshConnection")
 	}
-	if sshCredential.ID != testData.ID {
-		t.Errorf("expected ID %d, got %d", testData.ID, sshCredential.ID)
+	if sshConnection.ID != testData.ID {
+		t.Errorf("expected ID %d, got %d", testData.ID, sshConnection.ID)
 	}
-	if sshCredential.Name != testData.Name {
-		t.Errorf("expected name '%s', got '%s'", testData.Name, sshCredential.Name)
+	if sshConnection.Name != testData.Name {
+		t.Errorf("expected name '%s', got '%s'", testData.Name, sshConnection.Name)
 	}
-	if sshCredential.Host != testData.Host {
-		t.Errorf("expected host '%s', got %s", testData.Host, sshCredential.Host)
+	if sshConnection.Host != testData.Host {
+		t.Errorf("expected host '%s', got %s", testData.Host, sshConnection.Host)
 	}
-	if sshCredential.Port != testData.Port {
-		t.Errorf("expected port '%d', got %d", testData.Port, sshCredential.Port)
+	if sshConnection.Port != testData.Port {
+		t.Errorf("expected port '%d', got %d", testData.Port, sshConnection.Port)
 	}
-	if sshCredential.Username != testData.Username {
-		t.Errorf("expected username '%s', got %s", testData.Username, sshCredential.Username)
+	if sshConnection.Username != testData.Username {
+		t.Errorf("expected username '%s', got %s", testData.Username, sshConnection.Username)
 	}
-	if sshCredential.RemoteHostKey != testData.RemoteHostKey {
-		t.Errorf("expected remote_host_key '%s', got %s", testData.RemoteHostKey, sshCredential.RemoteHostKey)
+	if sshConnection.PrivateKeyID != testData.PrivateKeyID {
+		t.Errorf("expected private_key '%d', got %d", testData.PrivateKeyID, sshConnection.PrivateKeyID)
 	}
-	if sshCredential.ConnectTimeout != testData.ConnectTimeout {
-		t.Errorf("expected connect_timeout '%d', got %d", testData.ConnectTimeout, sshCredential.ConnectTimeout)
+	if sshConnection.RemoteHostKey != testData.RemoteHostKey {
+		t.Errorf("expected remote_host_key '%s', got %s", testData.RemoteHostKey, sshConnection.RemoteHostKey)
 	}
-	if sshCredential.SSHKeyPairID != testData.SSHKeyPairID {
-		t.Errorf("expected private_key '%d', got %d", testData.SSHKeyPairID, sshCredential.SSHKeyPairID)
+	if sshConnection.ConnectTimeout != testData.ConnectTimeout {
+		t.Errorf("expected connect_timeout '%d', got %d", testData.ConnectTimeout, sshConnection.ConnectTimeout)
 	}
 }
 
-func TestKeychainCredentialService_GetSSHCredential_NotFound(t *testing.T) {
+func TestSSHService_GetSSHConnection_NotFound(t *testing.T) {
 	mock := &mockAsyncCaller{
 		mockCaller: mockCaller{
 			callFunc: func(ctx context.Context, method string, params any) (json.RawMessage, error) {
@@ -579,17 +579,17 @@ func TestKeychainCredentialService_GetSSHCredential_NotFound(t *testing.T) {
 		},
 	}
 
-	svc := NewKeychainCredentialService(mock, Version{Major: 25, Minor: 4})
-	sshCredential, err := svc.GetSSHCredential(context.Background(), 999)
+	svc := NewSSHService(mock, Version{Major: 25, Minor: 4})
+	sshConnection, err := svc.GetSSHConnection(context.Background(), 999)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
-	if sshCredential != nil {
+	if sshConnection != nil {
 		t.Error("expected nil sshkeypair for not found")
 	}
 }
 
-func TestKeychainCredentialService_GetSSHCredential_Error(t *testing.T) {
+func TestSSHService_GetSSHConnection_Error(t *testing.T) {
 	mock := &mockAsyncCaller{
 		mockCaller: mockCaller{
 			callFunc: func(ctx context.Context, method string, params any) (json.RawMessage, error) {
@@ -598,14 +598,14 @@ func TestKeychainCredentialService_GetSSHCredential_Error(t *testing.T) {
 		},
 	}
 
-	svc := NewKeychainCredentialService(mock, Version{Major: 25, Minor: 4})
-	_, err := svc.GetSSHCredential(context.Background(), 1)
+	svc := NewSSHService(mock, Version{Major: 25, Minor: 4})
+	_, err := svc.GetSSHConnection(context.Background(), 1)
 	if err == nil {
 		t.Fatal("expected error")
 	}
 }
 
-func TestKeychainCredentialService_GetSSHCredential_ParseError(t *testing.T) {
+func TestSSHService_GetSSHConnection_ParseError(t *testing.T) {
 	mock := &mockAsyncCaller{
 		mockCaller: mockCaller{
 			callFunc: func(ctx context.Context, method string, params any) (json.RawMessage, error) {
@@ -614,15 +614,15 @@ func TestKeychainCredentialService_GetSSHCredential_ParseError(t *testing.T) {
 		},
 	}
 
-	svc := NewKeychainCredentialService(mock, Version{Major: 25, Minor: 4})
-	_, err := svc.GetSSHCredential(context.Background(), 1)
+	svc := NewSSHService(mock, Version{Major: 25, Minor: 4})
+	_, err := svc.GetSSHConnection(context.Background(), 1)
 	if err == nil {
 		t.Fatal("expected parse error")
 	}
 }
 
-func TestKeychainCredentialService_ListSSHCredentials(t *testing.T) {
-	testData := sampleSSHCredentials()
+func TestSSHService_ListSSHConnections(t *testing.T) {
+	testData := sampleSSHConnections()
 	mock := &mockAsyncCaller{
 		mockCaller: mockCaller{
 			callFunc: func(ctx context.Context, method string, params any) (json.RawMessage, error) {
@@ -630,74 +630,74 @@ func TestKeychainCredentialService_ListSSHCredentials(t *testing.T) {
 					t.Errorf("expected method keychaincredential.query, got %s", method)
 				}
 				if params == nil {
-					t.Error("expected filter params for ListSSHCredentials")
+					t.Error("expected filter params for ListSSHConnections")
 				}
-				return json.RawMessage(sampleSSHCredentialsJSON()), nil
+				return json.RawMessage(sampleSSHConnectionsJSON()), nil
 			},
 		},
 	}
 
-	svc := NewKeychainCredentialService(mock, Version{Major: 25, Minor: 4})
-	sshCredentials, err := svc.ListSSHCredentials(context.Background())
+	svc := NewSSHService(mock, Version{Major: 25, Minor: 4})
+	sshConnections, err := svc.ListSSHConnections(context.Background())
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
-	if len(sshCredentials) != 2 {
-		t.Fatalf("expected 2 sshCredentials, got %d", len(sshCredentials))
+	if len(sshConnections) != 2 {
+		t.Fatalf("expected 2 sshConnections, got %d", len(sshConnections))
 	}
 
-	if sshCredentials[0].ID != testData[0].ID {
-		t.Errorf("expected ID[0] %d, got %d", testData[0].ID, sshCredentials[0].ID)
+	if sshConnections[0].ID != testData[0].ID {
+		t.Errorf("expected ID[0] %d, got %d", testData[0].ID, sshConnections[0].ID)
 	}
-	if sshCredentials[0].Name != testData[0].Name {
-		t.Errorf("expected name[0] '%s', got '%s'", testData[0].Name, sshCredentials[0].Name)
+	if sshConnections[0].Name != testData[0].Name {
+		t.Errorf("expected name[0] '%s', got '%s'", testData[0].Name, sshConnections[0].Name)
 	}
-	if sshCredentials[0].Host != testData[0].Host {
-		t.Errorf("expected host '%s', got %s", testData[0].Host, sshCredentials[0].Host)
+	if sshConnections[0].Host != testData[0].Host {
+		t.Errorf("expected host '%s', got %s", testData[0].Host, sshConnections[0].Host)
 	}
-	if sshCredentials[0].Port != testData[0].Port {
-		t.Errorf("expected port '%d', got %d", testData[0].Port, sshCredentials[0].Port)
+	if sshConnections[0].Port != testData[0].Port {
+		t.Errorf("expected port '%d', got %d", testData[0].Port, sshConnections[0].Port)
 	}
-	if sshCredentials[0].Username != testData[0].Username {
-		t.Errorf("expected username '%s', got %s", testData[0].Username, sshCredentials[0].Username)
+	if sshConnections[0].Username != testData[0].Username {
+		t.Errorf("expected username '%s', got %s", testData[0].Username, sshConnections[0].Username)
 	}
-	if sshCredentials[0].RemoteHostKey != testData[0].RemoteHostKey {
-		t.Errorf("expected remote_host_key '%s', got %s", testData[0].RemoteHostKey, sshCredentials[0].RemoteHostKey)
+	if sshConnections[0].PrivateKeyID != testData[0].PrivateKeyID {
+		t.Errorf("expected private_key '%d', got %d", testData[0].PrivateKeyID, sshConnections[0].PrivateKeyID)
 	}
-	if sshCredentials[0].ConnectTimeout != testData[0].ConnectTimeout {
-		t.Errorf("expected connect_timeout '%d', got %d", testData[0].ConnectTimeout, sshCredentials[0].ConnectTimeout)
+	if sshConnections[0].RemoteHostKey != testData[0].RemoteHostKey {
+		t.Errorf("expected remote_host_key '%s', got %s", testData[0].RemoteHostKey, sshConnections[0].RemoteHostKey)
 	}
-	if sshCredentials[0].SSHKeyPairID != testData[0].SSHKeyPairID {
-		t.Errorf("expected private_key '%d', got %d", testData[0].SSHKeyPairID, sshCredentials[0].SSHKeyPairID)
+	if sshConnections[0].ConnectTimeout != testData[0].ConnectTimeout {
+		t.Errorf("expected connect_timeout '%d', got %d", testData[0].ConnectTimeout, sshConnections[0].ConnectTimeout)
 	}
 
-	if sshCredentials[1].ID != testData[1].ID {
-		t.Errorf("expected ID[1] %d, got %d", testData[1].ID, sshCredentials[1].ID)
+	if sshConnections[1].ID != testData[1].ID {
+		t.Errorf("expected ID[1] %d, got %d", testData[1].ID, sshConnections[1].ID)
 	}
-	if sshCredentials[1].Name != testData[1].Name {
-		t.Errorf("expected name[1] '%s', got '%s'", testData[1].Name, sshCredentials[1].Name)
+	if sshConnections[1].Name != testData[1].Name {
+		t.Errorf("expected name[1] '%s', got '%s'", testData[1].Name, sshConnections[1].Name)
 	}
-	if sshCredentials[1].Host != testData[1].Host {
-		t.Errorf("expected host '%s', got %s", testData[1].Host, sshCredentials[1].Host)
+	if sshConnections[1].Host != testData[1].Host {
+		t.Errorf("expected host '%s', got %s", testData[1].Host, sshConnections[1].Host)
 	}
-	if sshCredentials[1].Port != testData[1].Port {
-		t.Errorf("expected port '%d', got %d", testData[1].Port, sshCredentials[1].Port)
+	if sshConnections[1].Port != testData[1].Port {
+		t.Errorf("expected port '%d', got %d", testData[1].Port, sshConnections[1].Port)
 	}
-	if sshCredentials[1].Username != testData[1].Username {
-		t.Errorf("expected username '%s', got %s", testData[1].Username, sshCredentials[1].Username)
+	if sshConnections[1].Username != testData[1].Username {
+		t.Errorf("expected username '%s', got %s", testData[1].Username, sshConnections[1].Username)
 	}
-	if sshCredentials[1].RemoteHostKey != testData[1].RemoteHostKey {
-		t.Errorf("expected remote_host_key '%s', got %s", testData[1].RemoteHostKey, sshCredentials[1].RemoteHostKey)
+	if sshConnections[1].PrivateKeyID != testData[1].PrivateKeyID {
+		t.Errorf("expected private_key '%d', got %d", testData[1].PrivateKeyID, sshConnections[1].PrivateKeyID)
 	}
-	if sshCredentials[1].ConnectTimeout != testData[1].ConnectTimeout {
-		t.Errorf("expected connect_timeout '%d', got %d", testData[1].ConnectTimeout, sshCredentials[1].ConnectTimeout)
+	if sshConnections[1].RemoteHostKey != testData[1].RemoteHostKey {
+		t.Errorf("expected remote_host_key '%s', got %s", testData[1].RemoteHostKey, sshConnections[1].RemoteHostKey)
 	}
-	if sshCredentials[1].SSHKeyPairID != testData[1].SSHKeyPairID {
-		t.Errorf("expected private_key '%d', got %d", testData[1].SSHKeyPairID, sshCredentials[1].SSHKeyPairID)
+	if sshConnections[1].ConnectTimeout != testData[1].ConnectTimeout {
+		t.Errorf("expected connect_timeout '%d', got %d", testData[1].ConnectTimeout, sshConnections[1].ConnectTimeout)
 	}
 }
 
-func TestKeychainCredentialService_ListSSHCredentials_Empty(t *testing.T) {
+func TestSSHService_ListSSHConnections_Empty(t *testing.T) {
 	mock := &mockAsyncCaller{
 		mockCaller: mockCaller{
 			callFunc: func(ctx context.Context, method string, params any) (json.RawMessage, error) {
@@ -706,17 +706,17 @@ func TestKeychainCredentialService_ListSSHCredentials_Empty(t *testing.T) {
 		},
 	}
 
-	svc := NewKeychainCredentialService(mock, Version{Major: 25, Minor: 4})
-	sshCredentials, err := svc.ListSSHCredentials(context.Background())
+	svc := NewSSHService(mock, Version{Major: 25, Minor: 4})
+	sshConnections, err := svc.ListSSHConnections(context.Background())
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
-	if len(sshCredentials) != 0 {
-		t.Errorf("expected 0 sshkeypairs, got %d", len(sshCredentials))
+	if len(sshConnections) != 0 {
+		t.Errorf("expected 0 sshkeypairs, got %d", len(sshConnections))
 	}
 }
 
-func TestKeychainCredentialService_ListSSHCredentials_Error(t *testing.T) {
+func TestSSHService_ListSSHConnections_Error(t *testing.T) {
 	mock := &mockAsyncCaller{
 		mockCaller: mockCaller{
 			callFunc: func(ctx context.Context, method string, params any) (json.RawMessage, error) {
@@ -725,14 +725,14 @@ func TestKeychainCredentialService_ListSSHCredentials_Error(t *testing.T) {
 		},
 	}
 
-	svc := NewKeychainCredentialService(mock, Version{Major: 25, Minor: 4})
-	_, err := svc.ListSSHCredentials(context.Background())
+	svc := NewSSHService(mock, Version{Major: 25, Minor: 4})
+	_, err := svc.ListSSHConnections(context.Background())
 	if err == nil {
 		t.Fatal("expected error")
 	}
 }
 
-func TestKeychainCredentialService_ListSSHCredentials_ParseError(t *testing.T) {
+func TestSSHService_ListSSHConnections_ParseError(t *testing.T) {
 	mock := &mockAsyncCaller{
 		mockCaller: mockCaller{
 			callFunc: func(ctx context.Context, method string, params any) (json.RawMessage, error) {
@@ -741,14 +741,14 @@ func TestKeychainCredentialService_ListSSHCredentials_ParseError(t *testing.T) {
 		},
 	}
 
-	svc := NewKeychainCredentialService(mock, Version{Major: 25, Minor: 4})
-	_, err := svc.ListSSHCredentials(context.Background())
+	svc := NewSSHService(mock, Version{Major: 25, Minor: 4})
+	_, err := svc.ListSSHConnections(context.Background())
 	if err == nil {
 		t.Fatal("expected parse error")
 	}
 }
 
-func TestKeychainCredentialService_UpdateSSHCredential(t *testing.T) {
+func TestSSHService_UpdateSSHConnection(t *testing.T) {
 	callCount := 0
 	mock := &mockAsyncCaller{
 		mockCaller: mockCaller{
@@ -775,27 +775,27 @@ func TestKeychainCredentialService_UpdateSSHCredential(t *testing.T) {
 					}
 					return json.RawMessage(`{"id": 1}`), nil
 				}
-				return sampleSSHCredentialJSON(), nil
+				return sampleSSHConnectionJSON(), nil
 			},
 		},
 	}
 
-	svc := NewKeychainCredentialService(mock, Version{Major: 25, Minor: 4})
-	sshCredential, err := svc.UpdateSSHCredential(context.Background(), 1, UpdateSSHCredentialOpts{
+	svc := NewSSHService(mock, Version{Major: 25, Minor: 4})
+	sshConnection, err := svc.UpdateSSHConnection(context.Background(), 1, UpdateSSHConnectionOpts{
 		Name: "Updated keypair",
 	})
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
-	if sshCredential == nil {
+	if sshConnection == nil {
 		t.Fatal("expected non-nil sshkeypair")
 	}
-	if sshCredential.ID != 1 {
-		t.Errorf("expected ID 1, got %d", sshCredential.ID)
+	if sshConnection.ID != 1 {
+		t.Errorf("expected ID 1, got %d", sshConnection.ID)
 	}
 }
 
-func TestKeychainCredentialService_UpdateSSHCredential_Error(t *testing.T) {
+func TestSSHService_UpdateSSHConnection_Error(t *testing.T) {
 	mock := &mockAsyncCaller{
 		mockCaller: mockCaller{
 			callFunc: func(ctx context.Context, method string, params any) (json.RawMessage, error) {
@@ -804,14 +804,14 @@ func TestKeychainCredentialService_UpdateSSHCredential_Error(t *testing.T) {
 		},
 	}
 
-	svc := NewKeychainCredentialService(mock, Version{Major: 25, Minor: 4})
-	_, err := svc.UpdateSSHCredential(context.Background(), 999, UpdateSSHCredentialOpts{})
+	svc := NewSSHService(mock, Version{Major: 25, Minor: 4})
+	_, err := svc.UpdateSSHConnection(context.Background(), 999, UpdateSSHConnectionOpts{})
 	if err == nil {
 		t.Fatal("expected error")
 	}
 }
 
-func TestKeychainCredentialService_DeleteSSHCredential(t *testing.T) {
+func TestSSHService_DeleteSSHConnection(t *testing.T) {
 	mock := &mockAsyncCaller{
 		mockCaller: mockCaller{
 			callFunc: func(ctx context.Context, method string, params any) (json.RawMessage, error) {
@@ -827,14 +827,14 @@ func TestKeychainCredentialService_DeleteSSHCredential(t *testing.T) {
 		},
 	}
 
-	svc := NewKeychainCredentialService(mock, Version{Major: 25, Minor: 4})
-	err := svc.DeleteSSHCredential(context.Background(), 5)
+	svc := NewSSHService(mock, Version{Major: 25, Minor: 4})
+	err := svc.DeleteSSHConnection(context.Background(), 5)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
 }
 
-func TestKeychainCredentialService_DeleteSSHCredential_Error(t *testing.T) {
+func TestSSHService_DeleteSSHConnection_Error(t *testing.T) {
 	mock := &mockAsyncCaller{
 		mockCaller: mockCaller{
 			callFunc: func(ctx context.Context, method string, params any) (json.RawMessage, error) {
@@ -843,8 +843,8 @@ func TestKeychainCredentialService_DeleteSSHCredential_Error(t *testing.T) {
 		},
 	}
 
-	svc := NewKeychainCredentialService(mock, Version{Major: 25, Minor: 4})
-	err := svc.DeleteSSHCredential(context.Background(), 1)
+	svc := NewSSHService(mock, Version{Major: 25, Minor: 4})
+	err := svc.DeleteSSHConnection(context.Background(), 1)
 	if err == nil {
 		t.Fatal("expected error")
 	}

@@ -24,45 +24,45 @@ type CreateSSHKeyPairOpts struct {
 // UpdateSSHKeyPairOpts contains options for updating a ssh keypair.
 type UpdateSSHKeyPairOpts = CreateSSHKeyPairOpts
 
-// SSHCredential is the user-facing representation of a TrueNAS ssh credential.
-type SSHCredential struct {
+// SSHConnection is the user-facing representation of a TrueNAS ssh credential.
+type SSHConnection struct {
 	ID             int64
 	Name           string
 	Host           string
 	Port           int32
 	Username       string
+	PrivateKeyID   int64
 	RemoteHostKey  string
-	ConnectTimeout int
-	SSHKeyPairID   int64
+	ConnectTimeout int32
 }
 
-// CreateSSHCredentialOpts contains options for creating an ssh keypair.
-type CreateSSHCredentialOpts struct {
+// CreateSSHConnectionOpts contains options for creating an ssh keypair.
+type CreateSSHConnectionOpts struct {
 	Name           string
 	Host           string
 	Port           int32
 	Username       string
+	PrivateKeyID   int64
 	RemoteHostKey  string
-	ConnectTimeout int
-	SSHKeyPairID   int64
+	ConnectTimeout int32
 }
 
-// UpdateSSHCredentialOpts contains options for updating an ssh credential.
-type UpdateSSHCredentialOpts = CreateSSHCredentialOpts
+// UpdateSSHConnectionOpts contains options for updating an ssh credential.
+type UpdateSSHConnectionOpts = CreateSSHConnectionOpts
 
-// KeychainCredentialService provides typed methods for the keychaincredential.query API namespaces.
-type KeychainCredentialService struct {
+// SSHService provides typed methods for the keychaincredential API namespaces.
+type SSHService struct {
 	client  Caller
 	version Version
 }
 
-// NewKeychainCredentialService creates a new KeychainCredentialService.
-func NewKeychainCredentialService(c Caller, v Version) *KeychainCredentialService {
-	return &KeychainCredentialService{client: c, version: v}
+// NewSSHService creates a new SSHService.
+func NewSSHService(c Caller, v Version) *SSHService {
+	return &SSHService{client: c, version: v}
 }
 
 // CreateSSHKeyPair creates an ssh keypair and returns the full object.
-func (s *KeychainCredentialService) CreateSSHKeyPair(ctx context.Context, opts CreateSSHKeyPairOpts) (*SSHKeyPair, error) {
+func (s *SSHService) CreateSSHKeyPair(ctx context.Context, opts CreateSSHKeyPairOpts) (*SSHKeyPair, error) {
 	params := sshKeyPairOptsToParams(opts, true)
 
 	result, err := s.client.Call(ctx, "keychaincredential.create", params)
@@ -81,7 +81,7 @@ func (s *KeychainCredentialService) CreateSSHKeyPair(ctx context.Context, opts C
 }
 
 // GetSSHKeyPair returns a SSH keypair by ID, or nil if not found.
-func (s *KeychainCredentialService) GetSSHKeyPair(ctx context.Context, id int64) (*SSHKeyPair, error) {
+func (s *SSHService) GetSSHKeyPair(ctx context.Context, id int64) (*SSHKeyPair, error) {
 	filter := [][]any{{"id", "=", id}}
 	result, err := s.client.Call(ctx, "keychaincredential.query", filter)
 	if err != nil {
@@ -102,7 +102,7 @@ func (s *KeychainCredentialService) GetSSHKeyPair(ctx context.Context, id int64)
 }
 
 // ListSSHKeyPairs returns all keychain credentials.
-func (s *KeychainCredentialService) ListSSHKeyPairs(ctx context.Context) ([]SSHKeyPair, error) {
+func (s *SSHService) ListSSHKeyPairs(ctx context.Context) ([]SSHKeyPair, error) {
 	filter := [][]any{{"type", "=", KeychainCredentialTypeSSHKeyPair}}
 	result, err := s.client.Call(ctx, "keychaincredential.query", filter)
 	if err != nil {
@@ -122,7 +122,7 @@ func (s *KeychainCredentialService) ListSSHKeyPairs(ctx context.Context) ([]SSHK
 }
 
 // UpdateSSHKeyPair updates a SSH keypair and returns the full object.
-func (s *KeychainCredentialService) UpdateSSHKeyPair(ctx context.Context, id int64, opts UpdateSSHKeyPairOpts) (*SSHKeyPair, error) {
+func (s *SSHService) UpdateSSHKeyPair(ctx context.Context, id int64, opts UpdateSSHKeyPairOpts) (*SSHKeyPair, error) {
 	params := sshKeyPairOptsToParams(opts, false)
 
 	_, err := s.client.Call(ctx, "keychaincredential.update", []any{id, params})
@@ -134,14 +134,14 @@ func (s *KeychainCredentialService) UpdateSSHKeyPair(ctx context.Context, id int
 }
 
 // DeleteSSHKeyPair deletes a SSH keypair by ID.
-func (s *KeychainCredentialService) DeleteSSHKeyPair(ctx context.Context, id int64) error {
+func (s *SSHService) DeleteSSHKeyPair(ctx context.Context, id int64) error {
 	_, err := s.client.Call(ctx, "keychaincredential.delete", id)
 	return err
 }
 
-// CreateSSHCredential creates an ssh credential and returns the full object.
-func (s *KeychainCredentialService) CreateSSHCredential(ctx context.Context, opts CreateSSHCredentialOpts) (*SSHCredential, error) {
-	params := sshCredentialOptsToParams(opts, true)
+// CreateSSHConnection creates an ssh credential and returns the full object.
+func (s *SSHService) CreateSSHConnection(ctx context.Context, opts CreateSSHConnectionOpts) (*SSHConnection, error) {
+	params := sshConnectionOptsToParams(opts, true)
 
 	result, err := s.client.Call(ctx, "keychaincredential.create", params)
 	if err != nil {
@@ -155,18 +155,18 @@ func (s *KeychainCredentialService) CreateSSHCredential(ctx context.Context, opt
 		return nil, fmt.Errorf("parse create response: %w", err)
 	}
 
-	return s.GetSSHCredential(ctx, createResp.ID)
+	return s.GetSSHConnection(ctx, createResp.ID)
 }
 
-// GetSSHCredential returns a SSH credential by ID, or nil if not found.
-func (s *KeychainCredentialService) GetSSHCredential(ctx context.Context, id int64) (*SSHCredential, error) {
+// GetSSHConnection returns a SSH credential by ID, or nil if not found.
+func (s *SSHService) GetSSHConnection(ctx context.Context, id int64) (*SSHConnection, error) {
 	filter := [][]any{{"id", "=", id}}
 	result, err := s.client.Call(ctx, "keychaincredential.query", filter)
 	if err != nil {
 		return nil, err
 	}
 
-	credentials, err := ParseSSHCredentials(result)
+	credentials, err := ParseSSHConnections(result)
 	if err != nil {
 		return nil, err
 	}
@@ -175,44 +175,44 @@ func (s *KeychainCredentialService) GetSSHCredential(ctx context.Context, id int
 		return nil, nil
 	}
 
-	credential := sshCredentialFromResponse(credentials[0])
+	credential := sshConnectionFromResponse(credentials[0])
 	return &credential, nil
 }
 
-// ListSSHCredentials returns all keychain credentials.
-func (s *KeychainCredentialService) ListSSHCredentials(ctx context.Context) ([]SSHCredential, error) {
-	filter := [][]any{{"type", "=", KeychainCredentialTypeSSHCredential}}
+// ListSSHConnections returns all keychain credentials.
+func (s *SSHService) ListSSHConnections(ctx context.Context) ([]SSHConnection, error) {
+	filter := [][]any{{"type", "=", KeychainCredentialTypeSSHConnection}}
 	result, err := s.client.Call(ctx, "keychaincredential.query", filter)
 	if err != nil {
 		return nil, err
 	}
 
-	credentials, err := ParseSSHCredentials(result)
+	credentials, err := ParseSSHConnections(result)
 	if err != nil {
 		return nil, err
 	}
 
-	sshCredentials := make([]SSHCredential, len(credentials))
+	sshConnections := make([]SSHConnection, len(credentials))
 	for i, resp := range credentials {
-		sshCredentials[i] = sshCredentialFromResponse(resp)
+		sshConnections[i] = sshConnectionFromResponse(resp)
 	}
-	return sshCredentials, nil
+	return sshConnections, nil
 }
 
-// UpdateSSHCredential updates a SSH credential and returns the full object.
-func (s *KeychainCredentialService) UpdateSSHCredential(ctx context.Context, id int64, opts UpdateSSHCredentialOpts) (*SSHCredential, error) {
-	params := sshCredentialOptsToParams(opts, false)
+// UpdateSSHConnection updates a SSH credential and returns the full object.
+func (s *SSHService) UpdateSSHConnection(ctx context.Context, id int64, opts UpdateSSHConnectionOpts) (*SSHConnection, error) {
+	params := sshConnectionOptsToParams(opts, false)
 
 	_, err := s.client.Call(ctx, "keychaincredential.update", []any{id, params})
 	if err != nil {
 		return nil, err
 	}
 
-	return s.GetSSHCredential(ctx, id)
+	return s.GetSSHConnection(ctx, id)
 }
 
-// DeleteSSHCredential deletes a SSH credential by ID.
-func (s *KeychainCredentialService) DeleteSSHCredential(ctx context.Context, id int64) error {
+// DeleteSSHConnection deletes a SSH credential by ID.
+func (s *SSHService) DeleteSSHConnection(ctx context.Context, id int64) error {
 	_, err := s.client.Call(ctx, "keychaincredential.delete", id)
 	return err
 }
@@ -245,15 +245,15 @@ func sshKeyPairFromResponse(resp SSHKeyPairResponse) SSHKeyPair {
 	}
 }
 
-// sshCredentialOptsToParams converts CreateSSHCredentialOpts to API parameters.
-func sshCredentialOptsToParams(opts CreateSSHCredentialOpts, includeType bool) map[string]any {
+// sshConnectionOptsToParams converts CreateSSHConnectionOpts to API parameters.
+func sshConnectionOptsToParams(opts CreateSSHConnectionOpts, includeType bool) map[string]any {
 	attrs := map[string]any{
 		"host":            opts.Host,
 		"port":            opts.Port,
 		"username":        opts.Username,
+		"private_key":     opts.PrivateKeyID,
 		"remote_host_key": opts.RemoteHostKey,
 		"connect_timeout": opts.ConnectTimeout,
-		"private_key":     opts.SSHKeyPairID,
 	}
 	params := map[string]any{
 		"name":       opts.Name,
@@ -261,22 +261,22 @@ func sshCredentialOptsToParams(opts CreateSSHCredentialOpts, includeType bool) m
 	}
 
 	if includeType {
-		params["type"] = KeychainCredentialTypeSSHCredential
+		params["type"] = KeychainCredentialTypeSSHConnection
 	}
 
 	return params
 }
 
-// sshCredentialFromResponse converts a wire-format SSHCredentialResponse to a user-facing SSHCredential.
-func sshCredentialFromResponse(resp SSHCredentialResponse) SSHCredential {
-	return SSHCredential{
+// sshConnectionFromResponse converts a wire-format SSHConnectionResponse to a user-facing SSHConnection.
+func sshConnectionFromResponse(resp SSHConnectionResponse) SSHConnection {
+	return SSHConnection{
 		ID:             resp.ID,
 		Name:           resp.Name,
 		Host:           resp.Host,
 		Port:           resp.Port,
 		Username:       resp.Username,
+		PrivateKeyID:   resp.PrivateKeyID,
 		RemoteHostKey:  resp.RemoteHostKey,
 		ConnectTimeout: resp.ConnectTimeout,
-		SSHKeyPairID:   resp.PrivateKey,
 	}
 }

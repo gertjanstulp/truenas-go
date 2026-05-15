@@ -74,8 +74,8 @@ func sampleSSHKeyPairs() []SSHKeyPair {
 	}
 }
 
-// sampleSSHCredentialAttributesJSON returns an ssh credential attributes structure as json
-func sampleSSHCredentialAttributesJSON() json.RawMessage {
+// sampleSSHConnectionAttributesJSON returns an ssh credential attributes structure as json
+func sampleSSHConnectionAttributesJSON() json.RawMessage {
 	return json.RawMessage(`{
 		"host": "some host", 
 		"port": 123, 
@@ -86,8 +86,8 @@ func sampleSSHCredentialAttributesJSON() json.RawMessage {
 	}`)
 }
 
-// sampleSSHCredentialJSON returns a single ssh credential JSON response in an array.
-func sampleSSHCredentialJSON() json.RawMessage {
+// sampleSSHConnectionJSON returns a single ssh credential JSON response in an array.
+func sampleSSHConnectionJSON() json.RawMessage {
 	return json.RawMessage(`[{
 		"id": 1,
 		"name": "ssh credential name",
@@ -102,8 +102,8 @@ func sampleSSHCredentialJSON() json.RawMessage {
 	}]`)
 }
 
-// sampleSSHCredentialJSON returns two ssh credential JSON responses in an array.
-func sampleSSHCredentialsJSON() json.RawMessage {
+// sampleSSHConnectionJSON returns two ssh credential JSON responses in an array.
+func sampleSSHConnectionsJSON() json.RawMessage {
 	return json.RawMessage(`[
 		{
 			"id": 1,
@@ -132,32 +132,32 @@ func sampleSSHCredentialsJSON() json.RawMessage {
 	]`)
 }
 
-// sampleSSHCredential returns a single SSHCredential.
-func sampleSSHCredential() SSHCredential {
-	return SSHCredential{
+// sampleSSHConnection returns a single SSHConnection.
+func sampleSSHConnection() SSHConnection {
+	return SSHConnection{
 		ID:             1,
 		Name:           "ssh credential name",
 		Host:           "some host",
 		Port:           123,
 		Username:       "some username",
+		PrivateKeyID:   1,
 		RemoteHostKey:  "some remote host key",
 		ConnectTimeout: 42,
-		SSHKeyPairID:   1,
 	}
 }
 
-// sampleSSHCredentials returns an array with two SSHCredentials.
-func sampleSSHCredentials() []SSHCredential {
-	return []SSHCredential{
+// sampleSSHConnections returns an array with two SSHConnections.
+func sampleSSHConnections() []SSHConnection {
+	return []SSHConnection{
 		{
 			ID:             1,
 			Name:           "ssh credential name 1",
 			Host:           "some host 1",
 			Port:           123,
 			Username:       "some username 1",
+			PrivateKeyID:   1,
 			RemoteHostKey:  "some remote host key 1",
 			ConnectTimeout: 42,
-			SSHKeyPairID:   1,
 		},
 		{
 			ID:             2,
@@ -165,9 +165,9 @@ func sampleSSHCredentials() []SSHCredential {
 			Host:           "some host 2",
 			Port:           456,
 			Username:       "some username 2",
+			PrivateKeyID:   2,
 			RemoteHostKey:  "some remote host key 2",
 			ConnectTimeout: 37,
-			SSHKeyPairID:   2,
 		},
 	}
 }

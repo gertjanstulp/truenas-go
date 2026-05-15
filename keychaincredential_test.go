@@ -157,12 +157,12 @@ func Test_ParseSSHKeyPairs(t *testing.T) {
 	}
 }
 
-func Test_ParseSSHCredential(t *testing.T) {
-	testData := sampleSSHCredential()
+func Test_ParseSSHConnection(t *testing.T) {
+	testData := sampleSSHConnection()
 	tests := []struct {
 		name    string
 		raw     keychainCredentialRaw
-		want    SSHCredentialResponse
+		want    SSHConnectionResponse
 		wantErr bool
 	}{
 		{
@@ -170,18 +170,18 @@ func Test_ParseSSHCredential(t *testing.T) {
 			raw: keychainCredentialRaw{
 				ID:         testData.ID,
 				Name:       testData.Name,
-				Type:       KeychainCredentialTypeSSHCredential,
-				Attributes: json.RawMessage(sampleSSHCredentialAttributesJSON()),
+				Type:       KeychainCredentialTypeSSHConnection,
+				Attributes: json.RawMessage(sampleSSHConnectionAttributesJSON()),
 			},
-			want: SSHCredentialResponse{
+			want: SSHConnectionResponse{
 				ID:             testData.ID,
 				Name:           testData.Name,
 				Host:           testData.Host,
 				Port:           testData.Port,
 				Username:       testData.Username,
+				PrivateKeyID:   testData.PrivateKeyID,
 				RemoteHostKey:  testData.RemoteHostKey,
 				ConnectTimeout: testData.ConnectTimeout,
-				PrivateKey:     testData.SSHKeyPairID,
 			},
 		},
 		{
@@ -189,7 +189,7 @@ func Test_ParseSSHCredential(t *testing.T) {
 			raw: keychainCredentialRaw{
 				ID:         2,
 				Name:       "Invalid credential",
-				Type:       KeychainCredentialTypeSSHCredential,
+				Type:       KeychainCredentialTypeSSHConnection,
 				Attributes: json.RawMessage(`{not valid json`),
 			},
 			wantErr: true,
@@ -198,9 +198,9 @@ func Test_ParseSSHCredential(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := parseSSHCredential(tt.raw)
+			got, err := parseSSHConnection(tt.raw)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("parseSSHCredential() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("parseSSHConnection() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
 			if tt.wantErr {
@@ -221,57 +221,57 @@ func Test_ParseSSHCredential(t *testing.T) {
 			if got.Username != tt.want.Username {
 				t.Errorf("Username = %v, want %v", got.Username, tt.want.Username)
 			}
+			if got.PrivateKeyID != tt.want.PrivateKeyID {
+				t.Errorf("PrivateKeyID = %v, want %v", got.PrivateKeyID, tt.want.PrivateKeyID)
+			}
 			if got.RemoteHostKey != tt.want.RemoteHostKey {
 				t.Errorf("RemoteHostKey = %v, want %v", got.RemoteHostKey, tt.want.RemoteHostKey)
 			}
 			if got.ConnectTimeout != tt.want.ConnectTimeout {
 				t.Errorf("ConnectTimeout = %v, want %v", got.ConnectTimeout, tt.want.ConnectTimeout)
 			}
-			if got.PrivateKey != tt.want.PrivateKey {
-				t.Errorf("PrivateKey = %v, want %v", got.PrivateKey, tt.want.PrivateKey)
-			}
 		})
 	}
 }
 
-func Test_ParseSSHCredentials(t *testing.T) {
-	testData := sampleSSHCredential()
-	testDatas := sampleSSHCredentials()
+func Test_ParseSSHConnections(t *testing.T) {
+	testData := sampleSSHConnection()
+	testDatas := sampleSSHConnections()
 	tests := []struct {
 		name    string
 		data    []byte
-		want    []SSHCredentialResponse
+		want    []SSHConnectionResponse
 		wantErr bool
 	}{
 		{
 			name: "Single credential",
-			data: []byte(sampleSSHCredentialJSON()),
-			want: []SSHCredentialResponse{
+			data: []byte(sampleSSHConnectionJSON()),
+			want: []SSHConnectionResponse{
 				{
 					ID:             testData.ID,
 					Name:           testData.Name,
 					Host:           testData.Host,
 					Port:           testData.Port,
 					Username:       testData.Username,
+					PrivateKeyID:   testData.PrivateKeyID,
 					RemoteHostKey:  testData.RemoteHostKey,
 					ConnectTimeout: testData.ConnectTimeout,
-					PrivateKey:     testData.SSHKeyPairID,
 				},
 			},
 		},
 		{
 			name: "Multiple credentials",
-			data: []byte(sampleSSHCredentialsJSON()),
-			want: []SSHCredentialResponse{
+			data: []byte(sampleSSHConnectionsJSON()),
+			want: []SSHConnectionResponse{
 				{
 					ID:             testDatas[0].ID,
 					Name:           testDatas[0].Name,
 					Host:           testDatas[0].Host,
 					Port:           testDatas[0].Port,
 					Username:       testDatas[0].Username,
+					PrivateKeyID:   testDatas[0].PrivateKeyID,
 					RemoteHostKey:  testDatas[0].RemoteHostKey,
 					ConnectTimeout: testDatas[0].ConnectTimeout,
-					PrivateKey:     testDatas[0].SSHKeyPairID,
 				},
 				{
 					ID:             testDatas[1].ID,
@@ -279,9 +279,9 @@ func Test_ParseSSHCredentials(t *testing.T) {
 					Host:           testDatas[1].Host,
 					Port:           testDatas[1].Port,
 					Username:       testDatas[1].Username,
+					PrivateKeyID:   testDatas[1].PrivateKeyID,
 					RemoteHostKey:  testDatas[1].RemoteHostKey,
 					ConnectTimeout: testDatas[1].ConnectTimeout,
-					PrivateKey:     testDatas[1].SSHKeyPairID,
 				},
 			},
 		},
@@ -302,47 +302,47 @@ func Test_ParseSSHCredentials(t *testing.T) {
 		{
 			name: "empty array",
 			data: []byte(`[]`),
-			want: []SSHCredentialResponse{},
+			want: []SSHConnectionResponse{},
 		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := ParseSSHCredentials(tt.data)
+			got, err := ParseSSHConnections(tt.data)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("ParseSSHCredentials() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("ParseSSHConnections() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
 			if tt.wantErr {
 				return
 			}
 			if len(got) != len(tt.want) {
-				t.Fatalf("ParseSSHCredentials() returned %d SSHCredentials, want %d", len(got), len(tt.want))
+				t.Fatalf("ParseSSHConnections() returned %d SSHConnections, want %d", len(got), len(tt.want))
 			}
 			for i := range got {
 				if got[i].ID != tt.want[i].ID {
-					t.Errorf("SSHCredential[%d].ID = %v, want %v", i, got[i].ID, tt.want[i].ID)
+					t.Errorf("SSHConnection[%d].ID = %v, want %v", i, got[i].ID, tt.want[i].ID)
 				}
 				if got[i].Name != tt.want[i].Name {
-					t.Errorf("SSHCredential[%d].Name = %v, want %v", i, got[i].Name, tt.want[i].Name)
+					t.Errorf("SSHConnection[%d].Name = %v, want %v", i, got[i].Name, tt.want[i].Name)
 				}
 				if got[i].Host != tt.want[i].Host {
-					t.Errorf("SSHCredential[%d].Host = %v, want %v", i, got[i].Host, tt.want[i].Host)
+					t.Errorf("SSHConnection[%d].Host = %v, want %v", i, got[i].Host, tt.want[i].Host)
 				}
 				if got[i].Port != tt.want[i].Port {
-					t.Errorf("SSHCredential[%d].Port = %v, want %v", i, got[i].Port, tt.want[i].Port)
+					t.Errorf("SSHConnection[%d].Port = %v, want %v", i, got[i].Port, tt.want[i].Port)
 				}
 				if got[i].Username != tt.want[i].Username {
-					t.Errorf("SSHCredential[%d].Username = %v, want %v", i, got[i].Username, tt.want[i].Username)
+					t.Errorf("SSHConnection[%d].Username = %v, want %v", i, got[i].Username, tt.want[i].Username)
+				}
+				if got[i].PrivateKeyID != tt.want[i].PrivateKeyID {
+					t.Errorf("SSHConnection[%d].PrivateKeyID = %v, want %v", i, got[i].PrivateKeyID, tt.want[i].PrivateKeyID)
 				}
 				if got[i].RemoteHostKey != tt.want[i].RemoteHostKey {
-					t.Errorf("SSHCredential[%d].RemoteHostKey = %v, want %v", i, got[i].RemoteHostKey, tt.want[i].RemoteHostKey)
+					t.Errorf("SSHConnection[%d].RemoteHostKey = %v, want %v", i, got[i].RemoteHostKey, tt.want[i].RemoteHostKey)
 				}
 				if got[i].ConnectTimeout != tt.want[i].ConnectTimeout {
-					t.Errorf("SSHCredential[%d].ConnectTimeout = %v, want %v", i, got[i].ConnectTimeout, tt.want[i].ConnectTimeout)
-				}
-				if got[i].PrivateKey != tt.want[i].PrivateKey {
-					t.Errorf("SSHCredential[%d].PrivateKey = %v, want %v", i, got[i].PrivateKey, tt.want[i].PrivateKey)
+					t.Errorf("SSHConnection[%d].ConnectTimeout = %v, want %v", i, got[i].ConnectTimeout, tt.want[i].ConnectTimeout)
 				}
 			}
 		})
