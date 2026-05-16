@@ -15,9 +15,9 @@ Total API methods: 771 | Implemented: 78 (10.1%) | Tested: 78 (100.0% of impleme
 | DockerService | docker | 8 | 2 (25%) | 2 (100%) |
 | FilesystemService | filesystem | 13 | 2 (15%) | 2 (100%) |
 | InterfaceService | interface | 23 | 1 (4%) | 1 (100%) |
-| SSHService | keychaincredential | 10 | 4 (40%) | 4 (100%) |
 | NetworkService | network.general | 1 | 1 (100%) | 1 (100%) |
 | ReportingService | reporting | 8 | 2 (25%) | 2 (100%) |
+| SSHService | keychaincredential | 10 | 4 (40%) | 4 (100%) |
 | SnapshotService | zfs.snapshot | 9 | 7 (78%) | 7 (100%) |
 | SystemService | system | 14 | 2 (14%) | 2 (100%) |
 | VMService | vm, vm.device | 51 | 10 (20%) | 10 (100%) |
@@ -236,21 +236,6 @@ Total API methods: 771 | Implemented: 78 (10.1%) | Tested: 78 (100.0% of impleme
 | interface.websocket_local_ip |  |  |  |  |
 | interface.xmit_hash_policy_choices |  |  |  |  |
 
-### SSHService — `keychaincredential` (10 methods)
-
-| API Method | Implemented | Go Method | Tested | Tests |
-|------------|:-----------:|-----------|:------:|------:|
-| keychaincredential.create | ✓ | CreateSSHKeyPair, CreateSSHConnection | ✓ | 6 |
-| keychaincredential.delete | ✓ | DeleteSSHKeyPair, DeleteSSHConnection | ✓ | 4 |
-| keychaincredential.generate_ssh_key_pair |  |  |  |  |
-| keychaincredential.get_instance |  |  |  |  |
-| keychaincredential.query | ✓ | GetSSHKeyPair, ListSSHKeyPairs, GetSSHConnection, ListSSHConnections | ✓ | 16 |
-| keychaincredential.remote_ssh_host_key_scan |  |  |  |  |
-| keychaincredential.remote_ssh_semiautomatic_setup |  |  |  |  |
-| keychaincredential.setup_ssh_connection |  |  |  |  |
-| keychaincredential.update | ✓ | UpdateSSHKeyPair, UpdateSSHConnection | ✓ | 4 |
-| keychaincredential.used_by |  |  |  |  |
-
 ### NetworkService — `network.general` (1 methods)
 
 | API Method | Implemented | Go Method | Tested | Tests |
@@ -269,6 +254,21 @@ Total API methods: 771 | Implemented: 78 (10.1%) | Tested: 78 (100.0% of impleme
 | reporting.netdata_graph |  |  |  |  |
 | reporting.netdata_graphs | ✓ | ListGraphs | ✓ | 4 |
 | reporting.update |  |  |  |  |
+
+### SSHService — `keychaincredential` (10 methods)
+
+| API Method | Implemented | Go Method | Tested | Tests |
+|------------|:-----------:|-----------|:------:|------:|
+| keychaincredential.create | ✓ | CreateSSHKeyPair, CreateSSHConnection | ✓ | 6 |
+| keychaincredential.delete | ✓ | DeleteSSHKeyPair, DeleteSSHConnection | ✓ | 4 |
+| keychaincredential.generate_ssh_key_pair |  |  |  |  |
+| keychaincredential.get_instance |  |  |  |  |
+| keychaincredential.query | ✓ | GetSSHKeyPair, ListSSHKeyPairs, GetSSHConnection, ListSSHConnections | ✓ | 16 |
+| keychaincredential.remote_ssh_host_key_scan |  |  |  |  |
+| keychaincredential.remote_ssh_semiautomatic_setup |  |  |  |  |
+| keychaincredential.setup_ssh_connection |  |  |  |  |
+| keychaincredential.update | ✓ | UpdateSSHKeyPair, UpdateSSHConnection | ✓ | 4 |
+| keychaincredential.used_by |  |  |  |  |
 
 ### SnapshotService — `zfs.snapshot` (9 methods)
 
