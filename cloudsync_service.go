@@ -339,13 +339,8 @@ func taskOptsToParams(opts CreateCloudSyncTaskOpts) map[string]any {
 		params["include"] = opts.Include
 	}
 
-	if len(opts.PreScript) > 0 {
-		params["pre_script"] = opts.PreScript
-	}
-
-	if len(opts.PostScript) > 0 {
-		params["post_script"] = opts.PostScript
-	}
+	params["pre_script"] = opts.PreScript
+	params["post_script"] = opts.PostScript
 
 	return params
 }
